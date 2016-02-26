@@ -28,6 +28,7 @@ RUN mkdir /usr/local/src \
 		--with-http_image_filter_module \
 		--sbin-path=/usr/sbin/nginx \
 		--conf-path=/etc/nginx/nginx.conf \
+		--http-proxy-temp-path=/var/cache/nginx \
 		--error-log-path=/var/log/nginx/error.log \
 		--pid-path=/var/run/nginx.pid \
 		--http-log-path=/var/log/nginx/access.log \
