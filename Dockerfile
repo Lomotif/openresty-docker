@@ -20,12 +20,24 @@ RUN mkdir /usr/local/src \
 	&& wget https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz \
 	&& tar xzvf openresty-${OPENRESTY_VERSION}.tar.gz \
 	&& cd openresty-${OPENRESTY_VERSION} \
-	&& ./configure --with-pcre-jit --with-ipv6 --with-http_postgres_module --with-http_image_filter_module --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --pid-path=/var/run/nginx.pid --user=www-data --group=www-data --http-log-path=/var/log/nginx/access.log \
+	&& ./configure \
+		--with-pcre-jit \
+		--with-ipv6 \
+		--with-http_postgres_module \
+		--with-http_image_filter_module \
+		--sbin-path=/usr/sbin/nginx \
+		--conf-path=/etc/nginx/nginx.conf \
+		--error-log-path=/var/log/nginx/error.log \
+		--pid-path=/var/run/nginx.pid \
+		--http-log-path=/var/log/nginx/access.log \
+		--user=www-data \
+		--group=www-data \
 	&& mkdir -p /etc/nginx \
 	&& mkdir -p /etc/nginx/sites-available \
 	&& mkdir -p /etc/nginx/sites-enabled \
 	&& mkdir -p /etc/nginx/conf.d \
 	&& mkdir -p /var/log/nginx/ \
+	&& mkdir -p /var/cache/nginx \
 	&& make \
 	&& make install \
 	&& cd \
