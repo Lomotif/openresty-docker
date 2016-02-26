@@ -1,0 +1,23 @@
+
+#!/bin/sh
+
+# Convenience script for graceful reloading of nginx process
+# https://www.nginx.com/resources/wiki/start/topics/tutorials/commandline/
+
+# Test the configuration first
+X=$(/usr/sbin/nginx -t)
+if [ $? == 0 ]; then
+
+  X=$(kill -HUP $( cat /var/run/nginx.pid))
+  if [ $? == 0 ] ; then
+    echo "nginx reloaded"
+    exit 0
+  else
+    echo "nginx failed to reload"
+    exit 1
+  fi
+
+else
+  echo "Found an error with nginx configuration. Not reloading"
+  exit 1
+fi
