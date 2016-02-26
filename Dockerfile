@@ -24,6 +24,7 @@ RUN mkdir /usr/local/src \
 		--with-pcre-jit \
 		--with-ipv6 \
 		--with-http_postgres_module \
+		--without-lua_resty_mysql \
 		--with-http_image_filter_module \
 		--sbin-path=/usr/sbin/nginx \
 		--conf-path=/etc/nginx/nginx.conf \
