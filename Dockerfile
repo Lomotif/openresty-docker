@@ -29,6 +29,10 @@ RUN mkdir /usr/local/src \
 		--sbin-path=/usr/sbin/nginx \
 		--conf-path=/etc/nginx/nginx.conf \
 		--http-proxy-temp-path=/var/cache/nginx \
+		--http-client-body-temp-path=/var/cache/nginx \
+		--http-fastcgi-temp-path=/var/cache/nginx \
+		--http-scgi-temp-path=/var/cache/nginx \
+		--http-uwsgi-temp-path=/var/cache/nginx \
 		--error-log-path=/var/log/nginx/error.log \
 		--pid-path=/var/run/nginx.pid \
 		--http-log-path=/var/log/nginx/access.log \
