@@ -28,11 +28,11 @@ RUN mkdir /usr/local/src \
 		--with-http_image_filter_module \
 		--sbin-path=/usr/sbin/nginx \
 		--conf-path=/etc/nginx/nginx.conf \
-		--http-proxy-temp-path=/var/cache/nginx \
-		--http-client-body-temp-path=/var/cache/nginx \
-		--http-fastcgi-temp-path=/var/cache/nginx \
-		--http-scgi-temp-path=/var/cache/nginx \
-		--http-uwsgi-temp-path=/var/cache/nginx \
+		--http-proxy-temp-path=/var/lib/nginx/proxy \
+		--http-client-body-temp-path=/var/lib/nginx/body \
+		--http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+		--http-scgi-temp-path=/var/lib/nginx/scgi \
+		--http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
 		--error-log-path=/var/log/nginx/error.log \
 		--pid-path=/var/run/nginx.pid \
 		--http-log-path=/var/log/nginx/access.log \
@@ -43,7 +43,7 @@ RUN mkdir /usr/local/src \
 	&& mkdir -p /etc/nginx/sites-enabled \
 	&& mkdir -p /etc/nginx/conf.d \
 	&& mkdir -p /var/log/nginx/ \
-	&& mkdir -p /var/cache/nginx \
+	&& mkdir -p /var/lib/nginx \
 	&& make \
 	&& make install \
 	&& cd \
