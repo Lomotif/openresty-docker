@@ -8,6 +8,11 @@ ENV OPENRESTY_VERSION 1.9.7.3
 # 	&& apt-get install -y libreadline-dev libncurses5-dev libpcre3-dev libssl-dev libpq-dev perl make build-essential \
 # 	&& apt-get clean \
 # 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# FIXME: We'd ideally want to install libpq-dev for postgres library dev headers, but it looks like
+#	 Alpine isn't quite up to speed on that as yet. Once they publish that package, we should switch
+#	 to that from postgresql-dev below, which is the full postgres library, and hence far larger.
+# 	 Ref: http://bugs.alpinelinux.org/issues/3642
 RUN echo "http://dl-1.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
     echo "http://dl-2.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
     echo "http://dl-3.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
