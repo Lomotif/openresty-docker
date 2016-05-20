@@ -17,7 +17,7 @@ This folder, along with `/var/log/nginx` will be mounted in the container at run
 
 # Running
 
-    $ docker run -d -v /etc/nginx:/etc/nginx:ro -v /var/log/nginx:/var/log/nginx --name openresty lomotif/openresty
+    $ docker run -d -v /etc/nginx:/etc/nginx:ro -v /var/log/nginx:/var/log/nginx -p 80:80 -p 443:443 --name openresty lomotif/openresty
 
 # Applications and Virtual Hosts
 
