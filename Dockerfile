@@ -18,7 +18,7 @@ RUN echo "http://dl-1.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories
     echo "http://dl-3.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
     echo "http://dl-4.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
     echo "http://dl-5.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
-    apk add --update --no-cache readline-dev ncurses-dev pcre-dev openssl openssl-dev postgresql-dev gd-dev zlib-dev perl make build-base
+    apk add --update --no-cache nginx-initscripts readline-dev ncurses-dev pcre-dev openssl openssl-dev postgresql-dev gd-dev zlib-dev perl make build-base logrotate
 	
 RUN mkdir /usr/local/src \
 	&& cd /usr/local/src \
@@ -57,6 +57,7 @@ RUN mkdir /usr/local/src \
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/detailed.logformat /etc/nginx/conf.d/detailed.logformat
 COPY nginx/reload /reload
+COPY logrotate/nginx /etc/logrotate.d/nginx
 
 EXPOSE 80 443
 CMD ["-p", "/etc/nginx", "-c", "/etc/nginx/nginx.conf"]
