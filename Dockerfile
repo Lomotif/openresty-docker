@@ -1,9 +1,9 @@
-FROM alpine:3.3
+FROM alpine:3.4
 
 # Add our www-data group and user
 RUN addgroup -S www-data && adduser -S -G www-data www-data
 
-ENV OPENRESTY_VERSION 1.9.7.3
+ENV OPENRESTY_VERSION 1.9.15.1
 # RUN apt-get update \
 # 	&& apt-get install -y libreadline-dev libncurses5-dev libpcre3-dev libssl-dev libpq-dev perl make build-essential \
 # 	&& apt-get clean \
