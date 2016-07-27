@@ -1,13 +1,14 @@
 /var/log/nginx/*.log {
-        weekly
-        missingok
-        rotate 52
-        compress
-        delaycompress
-        notifempty
-        create 0640 root root
-        sharedscripts
-        postrotate
+	daily
+	missingok
+	rotate 5
+	size 300M
+	compress
+	delaycompress
+	notifempty
+	create 0640 www-data www-data
+	sharedscripts
+	postrotate
                test -r /var/run/nginx.pid && kill -USR1 `cat /var/run/nginx.pid`
-        endscript
+	endscript
 }
