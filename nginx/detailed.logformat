@@ -1,4 +1,5 @@
 log_format detailed '[$time_local] $host | $http_cf_connecting_ip | $http_x_forwarded_for | $remote_addr | '
                   '"$http_referer" "$http_user_agent" "$http_x_lomotif_agent" '
                   '"$http_cf_ipcountry" "$http_x_requested_with" '
-		  '"$request" $status $body_bytes_sent';
+		  '"$request" $status $body_bytes_sent | '
+		  '$upstream_addr $upstream_response_time | $request_time';
