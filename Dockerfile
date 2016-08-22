@@ -49,6 +49,9 @@ RUN mkdir /usr/local/src \
 	&& mkdir -p /etc/nginx/conf.d \
 	&& mkdir -p /var/log/nginx/ \
 	&& mkdir -p /var/lib/nginx \
+	# forward request and error logs to docker log collector
+	&& ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log \
 	&& make \
 	&& make install \
 	&& cd \
@@ -57,7 +60,6 @@ RUN mkdir /usr/local/src \
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/detailed.logformat /etc/nginx/conf.d/detailed.logformat
 COPY nginx/reload /reload
-COPY logrotate/nginx /etc/logrotate.d/nginx
 
 EXPOSE 80 443
 CMD ["-p", "/etc/nginx", "-c", "/etc/nginx/nginx.conf"]
