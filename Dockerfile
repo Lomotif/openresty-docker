@@ -4,23 +4,14 @@ FROM alpine:3.4
 RUN addgroup -S www-data && adduser -S -G www-data www-data
 
 ENV OPENRESTY_VERSION 1.9.15.1
-# RUN apt-get update \
-# 	&& apt-get install -y libreadline-dev libncurses5-dev libpcre3-dev libssl-dev libpq-dev perl make build-essential \
-# 	&& apt-get clean \
-# 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # FIXME: We'd ideally want to install libpq-dev for postgres library dev headers, but it looks like
 #	 Alpine isn't quite up to speed on that as yet. Once they publish that package, we should switch
 #	 to that from postgresql-dev below, which is the full postgres library, and hence far larger.
 # 	 Ref: http://bugs.alpinelinux.org/issues/3642
-RUN echo "http://dl-1.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
-    echo "http://dl-2.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
-    echo "http://dl-3.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
-    echo "http://dl-4.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
-    echo "http://dl-5.alpinelinux.org/alpine/v3.3/main" >> /etc/apk/repositories; \
-    apk add --update --no-cache nginx-initscripts readline-dev ncurses-dev pcre-dev openssl openssl-dev postgresql-dev gd-dev zlib-dev perl make build-base logrotate
-	
-RUN mkdir /usr/local/src \
+RUN apk add --update --no-cache --virtual .build-deps build-base gd-dev pcre-dev make perl-dev readline-dev zlib-dev openssl-dev && \
+    apk add --update --no-cache nginx-initscripts openssl gd libgcc zlib pcre && \
+    mkdir /usr/local/src \
 	&& cd /usr/local/src \
 	&& wget https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz \
 	&& tar xzvf openresty-${OPENRESTY_VERSION}.tar.gz \
@@ -54,7 +45,9 @@ RUN mkdir /usr/local/src \
 	&& make \
 	&& make install \
 	&& cd \
-	&& rm -rf /usr/local/src/openresty*
+	&& rm -rf /usr/local/src/openresty* \
+	&& apk del .build-deps
+
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/detailed.logformat /etc/nginx/conf.d/detailed.logformat
