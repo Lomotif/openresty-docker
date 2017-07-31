@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Replacement stub for the nginx binary
+# In this, we run a special bootstrap script before handing
+# control over to the actual nginx binary
+
+NGINX=$(which nginx)
+NGINX_CONF=/etc/nginx/nginx.conf
+LUA_INIT_PATH=/etc/nginx/lua/init
+INC=""
+for f in $(ls ${LUA_INIT_PATH}); do
+  INC="${f%%.lua}=require(\"${f%%.lua}\"); ${INC}"
+done
+
+sed -i "s/%lua_init_includes%/${INC}/" ${NGINX_CONF}
+
+${NGINX} -g "daemon off;" $@
