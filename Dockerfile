@@ -48,18 +48,24 @@ RUN mkdir -p /etc/nginx \
 	&& mkdir -p /etc/nginx/sites-available \
 	&& mkdir -p /etc/nginx/sites-enabled \
 	&& mkdir -p /etc/nginx/conf.d \
+	&& mkdir -p /etc/nginx/lua \
+	&& mkdir -p /etc/nginx/lua/modules \
+	&& mkdir -p /etc/nginx/lua/init \
 	&& mkdir -p /var/log/nginx/ \
 	&& mkdir -p /var/lib/nginx \
 	# forward request and error logs to docker log collector
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
+COPY nginx.init /nginx.init
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/lua/modules /etc/nginx/lua/modules
+COPY nginx/lua/init /etc/nginx/lua/init
 COPY nginx/detailed.logformat /etc/nginx/conf.d/detailed.logformat
 COPY nginx/reload /reload
 
 EXPOSE 80 443
 CMD ["-p", "/etc/nginx", "-c", "/etc/nginx/nginx.conf"]
-ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/nginx.init"]
 
 
