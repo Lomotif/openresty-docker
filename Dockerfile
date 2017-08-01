@@ -20,6 +20,7 @@ RUN apk add --update --no-cache --virtual .build-deps build-base gd-dev pcre-dev
 		--with-pcre-jit \
 		--with-ipv6 \
 		--with-http_v2_module \
+		--with-http_stub_status_module \
 		--without-lua_resty_mysql \
 		--without-http_redis2_module \
 		--without-http_redis_module \
