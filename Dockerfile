@@ -76,9 +76,13 @@ RUN mkdir -p /etc/nginx \
 
 COPY nginx.init /nginx.init
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/conf.d/* /etc/nginx/conf.d/
+COPY nginx/sites-available/* /etc/nginx/sites-available
 COPY nginx/lua/ /etc/nginx/lua/
 COPY nginx/detailed.logformat /etc/nginx/conf.d/detailed.logformat
 COPY nginx/reload /reload
+
+RUN ln -sf /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/
 
 EXPOSE 80 443
 CMD ["-p", "/etc/nginx", "-c", "/etc/nginx/nginx.conf"]
