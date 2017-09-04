@@ -64,10 +64,8 @@ RUN apk add --update --no-cache --virtual .build-deps build-base gd-dev pcre-dev
 RUN mkdir -p /etc/nginx \
 	&& mkdir -p /etc/nginx/sites-available \
 	&& mkdir -p /etc/nginx/sites-enabled \
-	&& mkdir -p /etc/nginx/conf.d \
-	&& mkdir -p /etc/nginx/lua \
-	&& mkdir -p /etc/nginx/lua/modules \
-	&& mkdir -p /etc/nginx/lua/init \
+	&& mkdir -p /etc/nginx/letsencrypt \
+	&& chown www-data.www-data /etc/nginx/letsencrypt \
 	&& mkdir -p /var/log/nginx/ \
 	&& mkdir -p /var/lib/nginx \
 	&& chown www-data.www-data /var/lib/nginx \
