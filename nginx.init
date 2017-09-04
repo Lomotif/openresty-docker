@@ -6,12 +6,22 @@
 
 NGINX=$(which nginx)
 NGINX_CONF=/etc/nginx/nginx.conf
-LUA_INIT_PATH=/etc/nginx/lua/init
-INC=""
-for f in $(ls ${LUA_INIT_PATH}); do
-  INC="${f%%.lua}=require(\"${f%%.lua}\"); ${INC}"
+LUA_MODULE_PATH=/etc/nginx/lua/modules
+
+INIT=''
+INIT_WORKER=''
+
+# Parse all modules
+for mod in $(ls ${LUA_MODULE_PATH}); do
+  if [ -f ${LUA_MODULE_PATH}/${mod}/init.lua ]; then
+    INIT="${mod}=require(\"${mod}.init\"); ${INIT}"
+  fi
+  if [ -f ${LUA_MODULE_PATH}/${mod}/init_worker.lua ]; then
+    INIT_WORKER="${mod}_worker=require(\"${mod}.init_worker\"); ${INIT_WORKER}"
+  fi
 done
 
-sed -i "s/%lua_init_includes%/${INC}/" ${NGINX_CONF}
+sed -i "s/%lua_init_includes%/${INIT}/" ${NGINX_CONF}
+sed -i "s/%lua_init_worker_includes%/${INIT_WORKER}/" ${NGINX_CONF}
 
 ${NGINX} -g "daemon off;" $@
