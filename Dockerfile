@@ -78,8 +78,7 @@ RUN mkdir -p /etc/nginx \
 
 COPY nginx.init /nginx.init
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/lua/modules /etc/nginx/lua/modules
-COPY nginx/lua/init /etc/nginx/lua/init
+COPY nginx/lua/ /etc/nginx/lua/
 COPY nginx/detailed.logformat /etc/nginx/conf.d/detailed.logformat
 COPY nginx/reload /reload
 
